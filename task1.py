@@ -1,7 +1,7 @@
 list = []
 for i in range(int(input("number of commands: "))):
     what = input().split()
-    print("command number:", (i)+1)
+    print("command number:", i + 1)
     if what[0] == 'insert':
         list.insert(int(what[1]), int(what[2]))
     elif what[0] == 'remove':

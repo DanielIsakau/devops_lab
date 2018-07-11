@@ -8,5 +8,5 @@ if a[-1] == '-':
 b.sort()
 a = int("".join(str(x) for x in a))
 b = int("".join(str(e) for e in b))
-print("a=",a, "b=",b)
-print("profit", a-b)
+print("a=", a, "b=", b)
+print("profit", a - b)
