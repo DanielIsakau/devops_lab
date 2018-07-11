@@ -18,11 +18,11 @@ for s in range(int(P)):
     same_network.append(0)
 for i in range(0, ip_number, 2):
     for j in range(int(n)):
-        IP1 = ips[i]
-        IP2 = ips[i + 1]
+        IP1 = ipaddress.ip_address(ips[i])
+        IP2 = ipaddress.ip_address(ips[i + 1])
         Vmatch = MASK[j]
-        net1 = ipaddress.IPv4Network(IP1 + '/' + Vmatch, False)
+        net1 = ipaddress.IPv4Network(ips[i] + '/' + Vmatch, False)
         ipnet1 = ipaddress.ip_network(net1)
-        if ipaddress.ip_address(IP1) in ipnet1 and ipaddress.ip_address(IP2) in ipnet1:
+        if IP1 in ipnet1 and IP2 in ipnet1:
             Co += 1
     print("Number of subnets ", Co)
