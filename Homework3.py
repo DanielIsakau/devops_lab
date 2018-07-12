@@ -1,9 +1,12 @@
-import psutil
-import json
 import CONF
+import json
+import psutil
 import time
 
+
 plus = 1
+
+
 def count():
     global plus
     res = plus
@@ -21,8 +24,8 @@ def outtxt():
     nbw = str(psutil.net_io_counters().bytes_recv)
     outinfo = ("SNAPSHOT " + str(count()) + "\n" + time.strftime("%H:%M:%S") +
                "\n" + "CPU load " + cpu + "\n" + "Memory usage " + vmm +
-               "\n" + "VMemory usage " + swm + "\n" + "Disk Read Count "
-               + ior + "\n" + "Disk Write Count " + iow + "\n" +
+               "\n" + "VMemory usage " + swm + "\n" + "Disk Read Count " +
+               ior + "\n" + "Disk Write Count " + iow + "\n" +
                "Byte sent " + nbs + "\n" + "Byte receive" + nbw + "\n\n")
     with open('log.txt', "a") as logfile:
         logfile.write(outinfo)
