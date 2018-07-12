@@ -3,7 +3,6 @@ import json
 import psutil
 import time
 
-
 plus = 1
 
 
@@ -14,64 +13,39 @@ def count():
     return res
 
 
-def outtxt():
-    cpu = str(psutil.cpu_percent(interval=0.5))
+def outflow():
+    clock = time.strftime("%H:%M:%S")
+    cpu = str(psutil.cpu_percent())
     vmm = str(psutil.virtual_memory().percent)
     swm = str(psutil.swap_memory().percent)
     ior = str(psutil.disk_io_counters().read_count)
     iow = str(psutil.disk_io_counters().write_count)
     nbs = str(psutil.net_io_counters().bytes_sent)
     nbw = str(psutil.net_io_counters().bytes_recv)
-    outinfo = ("SNAPSHOT " + str(count()) + "\n" + time.strftime("%H:%M:%S") +
-               "\n" + "CPU load " + cpu + "\n" + "Memory usage " + vmm +
-               "\n" + "VMemory usage " + swm + "\n" + "Disk Read Count " +
-               ior + "\n" + "Disk Write Count " + iow + "\n" +
-               "Byte sent " + nbs + "\n" + "Byte receive" + nbw + "\n\n")
-    with open('log.txt', "a") as logfile:
-        logfile.write(outinfo)
+    if CONF.out == "txt":
+        outing = 'SNAPSHOT: {num}\nTime: {T}\nCPU load: {cp}\n' \
+                 'Memory usage: {mu}\nVMemory usage: {vu}\nDisk Read' \
+                 'Count: {dr}\nDisk Write Count: {dw}\nByte sent: {bs}\n' \
+                 'Byte receive: {br}\n\n'.format(num=count(), T=clock,
+                                                 cp=cpu, mu=vmm, vu=swm,
+                                                 dr=ior, dw=iow, bs=nbs,
+                                                 br=nbw)
+        with open('log.txt', "a") as logfile:
+            logfile.write(outing)
+    else:
+        dyson = {'SNAPSHOT': count(), 'TIME': clock, 'CPU load': cpu,
+                 'Memory usage': vmm, 'VMemory usage': swm,
+                 'Disk Read Count': ior, 'Disk Write Count': iow,
+                 'Byte sent': nbs, 'Byte receive': nbw}
+        outing = "[%s]" % json.dumps(dyson)
+        with open('log.json', "a") as logfile:
+            logfile.write(outing)
+        with open('log.json', 'r') as temp:
+            testfile = temp.read()
+        with open('log.json', 'w') as temp1:
+            temp1.write(testfile.replace("][", ", "))
 
 
-def outjson():
-    cpu = str(psutil.cpu_percent(interval=0.5))
-    vmm = str(psutil.virtual_memory().percent)
-    swm = str(psutil.swap_memory().percent)
-    ior = str(psutil.disk_io_counters().read_count)
-    iow = str(psutil.disk_io_counters().write_count)
-    nbs = str(psutil.net_io_counters().bytes_sent)
-    nbw = str(psutil.net_io_counters().bytes_recv)
-    djson = dict()
-    djson["SNAPSHOT"] = count()
-    djson["TIME"] = time.strftime("%H:%M:%S")
-    djson["CPU load"] = cpu
-    djson["Memory usage"] = vmm
-    djson["VMemory usage"] = swm
-    djson["Disk Read Count"] = ior
-    djson["Disk Write Count"] = iow
-    djson["Byte sent "] = nbs
-    djson["Byte receive"] = nbw
-    outinfo = "[" + json.dumps(djson) + "]"
-    with open('log.json', "a") as logfile:
-        logfile.write(outinfo)
-    replace()
-
-
-def replace():
-    file = open('log.json', 'r')
-    text = file.read()
-    file.close()
-    file = open('log.json', 'w')
-    file.write(text.replace("][", " ,"))
-    file.close()
-
-
-def writelog():
-    while True:
-        if CONF.out == "txt":
-            outtxt()
-            time.sleep(CONF.interval)
-        else:
-            outjson()
-            time.sleep(CONF.interval)
-
-
-writelog()
+while True:
+    outflow()
+    time.sleep(CONF.interval)
