@@ -39,7 +39,7 @@ elif a and b > 0:
         print("MAX difference", sortmax(b) - sortmin(a))
 elif a and b < 0:
     if sortmax(b) < sortmax(a):
-        print("MAX difference", (sortmax(b) - sortmin(a))*-1)
+        print("MAX difference", (sortmax(b) - sortmin(a)) * -1)
     else:
-        print("MAX difference", (sortmax(a) - sortmin(b))*-1)
+        print("MAX difference", (sortmax(a) - sortmin(b)) * -1)
 # мы не пришли к общему решению. Каждый понял по своему
