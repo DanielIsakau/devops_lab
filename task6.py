@@ -1,28 +1,23 @@
 import ipaddress
-MASK = list()
-n = int(input("Number of masks: "))
-Co = 0
-for i in range(int(n)):
-    k = input("Mask: ")
-    MASK.append(k)
+
+n = int(input("How many masks: "))
+masks = list()
 ips = list()
-P = int(input("IP pairs = : "))
-for j in range(int(P)):
-    m = input("IP 1: ")
-    p = input("IP 2: ")
-    ips.append(m)
-    ips.append(p)
-ip_number = P * 2 - 1
-same_network = list()
-for s in range(int(P)):
-    same_network.append(0)
-for i in range(0, ip_number, 2):
+for i in range(n):
+    masks.append(input("Mask %s: " % (i + 1)))
+P = int(input("How many IP pairs: "))
+for i in range(P):
+    ips.append(input("Pair %i IP 1: " % (i + 1)))
+    ips.append(input("Pair %i IP 2: " % (i + 1)))
+for i in range(0, P):
+    Count = 0
+    pr1 = ipaddress.ip_address(ips[i])
+    pr2 = ipaddress.ip_address(ips[i + 1])
     for j in range(int(n)):
         IP1 = ipaddress.ip_address(ips[i])
         IP2 = ipaddress.ip_address(ips[i + 1])
-        Vmatch = MASK[j]
-        net1 = ipaddress.IPv4Network(ips[i] + '/' + Vmatch, False)
-        ipnet1 = ipaddress.ip_network(net1)
-        if IP1 in ipnet1 and IP2 in ipnet1:
-            Co += 1
-    print("Number of subnets ", Co)
+        net = ipaddress.IPv4Network(ips[i] + '/' + masks[j], False)
+        ipnet = ipaddress.ip_network(net)
+        if IP1 and IP2 in ipnet:
+            Count += 1
+    print("Number of subnets are %s %s located =" % (pr1, pr2), Count)

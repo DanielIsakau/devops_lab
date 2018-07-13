@@ -7,5 +7,6 @@ for i in range(len(a)):
         sum[a[i]] = 1
 keys = sorted(sorted(sum, reverse=True), key=sum.get)
 keys = keys[::-1]
+
 for i in range(3):
     print(keys[i], sum[keys[i]])
