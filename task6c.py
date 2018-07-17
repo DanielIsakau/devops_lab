@@ -4,7 +4,7 @@ import sys
 import yaml
 
 
-class Inform:
+class Inform(object):
     a = sys.version.split()[0]
     b = sys.path[3]
     c = os.environ['VIRTUAL_ENV']

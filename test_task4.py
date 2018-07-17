@@ -1,9 +1,8 @@
 import task4
 import unittest
-from unittest import TestCase
 
 
-class TestTask(TestCase):
+class TestTask(unittest.TestCase):
 
     def test_N_is_int(self):
         self.assertTrue(type(task4.N) == int)

@@ -1,3 +1,4 @@
 PyYAML
+yYAML
 flake8
 pydocstyle

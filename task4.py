@@ -1,7 +1,7 @@
 import random
+N = 50
 T = 0
 dic = {}
-N = int(input("Number of neighbors:"))
 for i in range(0, N):
     dic[random.randint(0, 100)] = random.randint(0, 1)
 for key, value in dic.items():
